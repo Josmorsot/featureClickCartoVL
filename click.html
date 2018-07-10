@@ -20,7 +20,7 @@
         <h1>Feature click</h1>
       </header>
       <section>
-        <p class="description open-sans">Click on the polygons</p>
+        <p id="turnoff" class="description open-sans">Turn off the some lines</p>
         <div id="controls">
           <div id="content"></div>
         </div>
@@ -44,7 +44,7 @@
       zoom: 11,
       dragRotate: false,
       touchZoomRotate: false,
-    });
+    }).on('move', readData);
 
     // Define user
     carto.setDefaultAuth({
@@ -59,6 +59,7 @@
     `);
     const viz = new carto.Viz(`
       @neighbourhood: $status
+      @elements: viewportFeatures($status)
     `);
     const layer = new carto.Layer('layer', source, viz);
 
@@ -82,7 +83,18 @@
       }
       document.getElementById('content').innerHTML = content;
     }
+
+    function readData() {
+      console.log(viz.variables.elements.eval().length);
+    }
+
+    function applyFilter() {
+      const s = carto.expressions;
+      viz.filter.blendTo(s.eq(s.prop('status'), 'FLUID'))
+    }
+
     function hideLoader() {
+      document.querySelector('#turnoff').addEventListener('click', applyFilter);
       document.getElementById('loader').style.opacity = '0';
     }
   </script>
