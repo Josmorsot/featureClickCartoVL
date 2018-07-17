@@ -54,12 +54,16 @@
 
     // Define layer and variables for interactivity
     const source = new carto.source.SQL(`
-    select cartodb_id, the_geom, the_geom_webmercator, status, 'madrid_th' as source
+    select cartodb_id, the_geom, the_geom_webmercator, status, 'informo' as source
     from madrid_traffic_servicelevels
     `);
     const viz = new carto.Viz(`
       @neighbourhood: $status
       @elements: viewportFeatures($status)
+      @status: $status
+      @elements: viewPortFeatures($status, $source)
+
+      width: 3
     `);
     const layer = new carto.Layer('layer', source, viz);
 
