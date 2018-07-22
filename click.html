@@ -17,7 +17,7 @@
   <aside class="toolbox">
     <div class="box">
       <header>
-        <h1>Feature click</h1>
+        <h1>Performance Test</h1>
       </header>
       <section>
         <p id="turnoff" class="description open-sans">Turn off the some lines</p>
@@ -62,10 +62,6 @@
       width: 3
     `);
     const layer = new carto.Layer('layer', source, viz);
-
-    // Define interactivity
-    // const interactivity = new carto.Interactivity(layer);
-    // interactivity.on('featureClick', updateNeighbourhood);
 
     layer.addTo(map, 'watername_ocean');
     layer.on('loaded', hideLoader);
